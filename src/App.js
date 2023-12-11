@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import {useState} from "react";
+import uuid from "react-uuid";
 import './App.css';
+import Sidebar from './Sidebar';
+import Main from './Main';
 
 function App() {
+
+  const [quests, setQuests] = useState([]);
+
+  const onAddQuest=()=>{
+    const newQuest = {
+      id: uuid(),
+      title:"Untitled Quest",
+      body: "",
+      lastModified: Date.now(),
+    }
+    setQuests([newQuest, ...quests]);
+    console.log("Quest Added!");
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Making sure this works!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Sidebar quests={quests} onAddQuest={onAddQuest}/>
+      <Main/>
     </div>
   );
 }
